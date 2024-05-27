@@ -1,0 +1,22 @@
+<div data-sly-use.model="com.aem.assignment.core.models.SingleProductModelImpl">
+    <div data-sly-test="${model.productEntity}">
+        <div class="product-card">
+        <div class="product-image">
+            <img src="${model.productEntity.image}" alt="${model.productEntity.name}">
+        </div>
+        <div class="product-details">
+            <h3>${model.productEntity.name}</h3>
+            <p>${model.productEntity.description}</p>
+            <div class="product-price">
+                ${model.productEntity.price}
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="InvalidId">
+        <div class="noProductFound" data-sly-test="${!model.productEntity}">
+            <h2>No Product Found! Check the product ID from url</h2>
+        
+        </div>
+    </div>
+</div>

@@ -1,0 +1,91 @@
+
+        /* Styles for carousel */
+        .carousel {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+        }
+        .carousel-container {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .carousel-item {
+            flex: 0 0 auto;
+            width: 100%;
+            transition: transform 0.5s ease;
+        }
+        button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: #d00d0d;
+        }
+        .prev {
+            left: 0;
+        }
+        .next {
+            right: 0;
+        }
+
+        /* Styles for dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .product-image {
+            width: 200px;
+            height: 200px;
+            display: block;
+            margin: 0 auto;
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Box shadow for depth */
+        }
+        
+        .price {
+            font-size: 18px;
+            color: #ff6f61; /* Vivid red */
+            font-weight: bold;
+            margin: 0 auto;
+        }
+        
+        .inventory {
+            font-size: 16px;
+            color: #4cb5f5; /* Bright blue */
+            margin-top: 5px;
+            margin: 0 auto;
+        }
+        
+        /* Gradient background for product container */
+        .product {
+            background: linear-gradient(45deg, #ffb347, #ffcc33); /* Gradient from orange to yellow */
+            padding: 20px;
+            border-radius: 10px; /* Rounded corners */
+            margin-bottom: 20px;
+        }
+        
