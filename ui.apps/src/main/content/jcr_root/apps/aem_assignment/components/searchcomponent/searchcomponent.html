@@ -1,0 +1,12 @@
+<h1> This is search Component </h1>
+<sly data-sly-use.clientLib="/libs/granite/sightly/templates/clientlib.html">
+<sly data-sly-call="${clientLib.all @ categories='search-component'}"/>
+
+
+
+
+<div class="product-search">
+    <input type="text" id="productSearchInput" placeholder="Search for products...">
+    <button id="searchButton">Search</button>
+    <ul id="productSearchResults"></ul>
+</div>

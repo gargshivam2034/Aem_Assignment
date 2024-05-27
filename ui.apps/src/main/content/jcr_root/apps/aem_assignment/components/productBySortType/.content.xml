@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:description="It fetches the product based on sort type clicked"
+    jcr:primaryType="cq:Component"
+    jcr:title="Products by sort type"
+    componentGroup="Training Project - Content"/>

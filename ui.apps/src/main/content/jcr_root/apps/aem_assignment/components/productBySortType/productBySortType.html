@@ -1,0 +1,19 @@
+<sly data-sly-use.clientLib="/libs/granite/sightly/templates/clientlib.html">
+<sly data-sly-call="${clientLib.all @ categories='sort-product'}"/>
+
+<div class="dropdown">
+    <button class="dropbtn">Filter</button>
+    <div class="dropdown-content">
+        <a href="#" onclick="filter('high-low')">Price High to Low</a>
+        <a href="#" onclick="filter('low-high')">Price Low to High</a>
+        <a href="#" onclick="filter('recent')">Most Recent</a>
+    </div>
+</div>
+
+<div class="carousel">
+    <div class="carousel-container">
+        <!-- Carousel items will be added dynamically via JavaScript -->
+    </div>
+    <button class="prev" onclick="prevSlide()">&#10094;</button>
+    <button class="next" onclick="nextSlide()">&#10095;</button>
+</div>

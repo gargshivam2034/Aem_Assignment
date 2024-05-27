@@ -1,0 +1,26 @@
+<sly data-sly-use.model = "com.aem.assignment.core.models.ProductCarousalModel">
+
+
+<!-- productcarousel.html -->
+<div class="product-carousel data-attribute"
+    data-sortType = "${model.sortFiltersType}">
+<div class="product-carousel">
+    <div class="product-carousel-inner">
+        <sly data-sly-repeat.product="${model.productEntityList}" data-sly-unwrap>
+            <div class="product-carousel-item">
+                <img src="${product.image}" alt="${product.title}" class="product-carousel-item-img">
+                <div class="product-carousel-item-content">
+                    <h2 class="product-carousel-item-heading">${product.title}</h2>
+                    <p class="product-carousel-item-description">${product.description}</p>
+                    <p class="product-carousel-item-price">Price: $${product.price}</p>
+                    <p class="product-carousel-item-category">Category: ${product.category}</p>
+                </div>
+            </div>
+        </sly>
+    </div>
+</div>
+</div>
+
+
+
+</sly>
