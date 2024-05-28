@@ -32,14 +32,7 @@ public class ParseExcelSheetProcessStep implements WorkflowProcess {
     @Reference
     private ReadExcelDataService readExcelDataService;
 
-    /**
-     * Executes the workflow process step.
-     *
-     * @param workItem        The work item representing the current workflow instance.
-     * @param workflowSession The workflow session associated with the current workflow instance.
-     * @param metaDataMap     The metadata associated with the workflow process.
-     * @throws WorkflowException If an error occurs during workflow execution.
-     */
+   
     @Override
     public void execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap metaDataMap) throws WorkflowException {
 
@@ -64,12 +57,7 @@ public class ParseExcelSheetProcessStep implements WorkflowProcess {
         }
     }
 
-    /**
-     * Retrieves a resource resolver for the service user.
-     *
-     * @return A ResourceResolver instance.
-     * @throws LoginException If the login process fails.
-     */
+   
     private ResourceResolver getResourceResolver() throws LoginException {
         Map<String, Object> map = new HashMap<>();
         map.put(ResourceResolverFactory.SUBSERVICE, "useruser");
