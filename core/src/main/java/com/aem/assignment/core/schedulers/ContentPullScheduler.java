@@ -35,7 +35,7 @@ public class ContentPullScheduler implements Runnable {
     private static final Logger LOG = LoggerFactory.getLogger(ContentPullScheduler.class);
     private static final String TEMPLATE_PATH = "/conf/aem_assignment/settings/wcm/templates/aem-practice";
     private static final String PARENT_PATH = "/content/aem_assignment/us/en";
-    private static final String API_URL = "https://fakestoreapi.com/products/2";  // Replace with actual API URL
+    private static final String API_URL = "https://fakestoreapi.com/products/2";  
 
     @Reference
     private Scheduler scheduler;
@@ -61,10 +61,10 @@ public class ContentPullScheduler implements Runnable {
             if (resourceResolver != null) {
                 PageManager pageManager = resourceResolver.adaptTo(PageManager.class);
                 if (pageManager != null) {
-                    // Pull content from third-party API
+                    
                     String content = fetchContentFromAPI();
 
-                    // Process and create pages based on the fetched content
+                    
                     createAndReplicatePage(resourceResolver, pageManager, content);
                 }
             }
@@ -89,12 +89,12 @@ public class ContentPullScheduler implements Runnable {
         } catch (Exception e) {
             LOG.error("Error fetching content from API", e);
         }
-        return content.toString();  // Return the content as a string
+        return content.toString();  
     }
 
     private void createAndReplicatePage(ResourceResolver resourceResolver, PageManager pageManager, String content) {
         try {
-            String pageTitle = "New Page Title";  // Replace with actual title logic if needed
+            String pageTitle = "New Page Title";  
             Page newPage = pageManager.create(PARENT_PATH, pageTitle, TEMPLATE_PATH, pageTitle);
 
             if (newPage != null) {
@@ -102,13 +102,13 @@ public class ContentPullScheduler implements Runnable {
                 if (pageNode != null && pageNode.hasNode("jcr:content")) {
                     Node contentNode = pageNode.getNode("jcr:content");
                     contentNode.setProperty("jcr:title", pageTitle);
-                    contentNode.setProperty("myproject:content", content);  // Custom property for content
+                    contentNode.setProperty("myproject:content", content);  
                     contentNode.getSession().save();
 
-                    // Replicate the page
+                    
                     replicator.replicate(resourceResolver.adaptTo(Session.class), ReplicationActionType.ACTIVATE, newPage.getPath());
 
-                    // Log the action
+                    
                     logAudit(contentNode, "Page created and replicated");
                 }
             }
