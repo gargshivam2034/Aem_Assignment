@@ -24,11 +24,11 @@ public class SendNotificationServiceImpl implements SendNotificationService {
             TaskManagerFactory taskManagerFactory = taskManager.getTaskManagerFactory();
             Task newTask = taskManagerFactory.newTask("Notification");
             newTask.setName("New Page Created Notification");
-            newTask.setContentPath(pagePath); // Set the path of the newly created page
+            newTask.setContentPath(pagePath); 
             newTask.setPriority(InboxItem.Priority.HIGH);
             newTask.setDescription("A new page has been created");
             newTask.setInstructions("Review the newly created page");
-            newTask.setCurrentAssignee("admin"); // Assign the task to the admin
+            newTask.setCurrentAssignee("admin"); 
             taskManager.createTask(newTask);
         } catch (TaskManagerException e) {
             LOGGER.debug("Failed to send notification to admin: {} ",e);
