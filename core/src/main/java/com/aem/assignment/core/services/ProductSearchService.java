@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Service class to search for products in the repository.
@@ -78,14 +79,13 @@ public class ProductSearchService {
      */
     private List<String> extractProductNames(Iterator<Resource> resources) {
         List<String> productNames = new ArrayList<>();
-        while (resources.hasNext()) {
-            Resource resource = resources.next();
+        resources.forEachRemaining(resource -> {
             ValueMap properties = resource.getValueMap();
             String productName = properties.get("jcr:title", String.class);
             if (productName != null) {
                 productNames.add(productName);
             }
-        }
+        });
         return productNames;
     }
 }
