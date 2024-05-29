@@ -31,8 +31,6 @@ public class ProductCarousalModelImpl implements ProductCarousalModel {
     private static final String BASE_URL = "https://fakestoreapi.com/products/";
 
 
-    //------Sort By--------
-
     @ValueMapValue
     @Default(values = StringUtils.EMPTY)
     String sortFiltersType;

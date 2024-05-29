@@ -1,4 +1,4 @@
-package com.aem.assignment.core.models.impl;
+package com.aem.assignment.core.entities;
 
 public class Obj {
       private String firstName;

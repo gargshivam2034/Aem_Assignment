@@ -1,7 +1,7 @@
 package com.aem.assignment.core.models.impl;
 
 
-import com.aem.assignment.core.models.impl.Entity;
+import com.aem.assignment.core.entities.Entity;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
@@ -75,10 +75,9 @@ public class DemoAuthor
         if (books != null && books.hasChildren()) {
             for (Resource childres : books.getChildren()) {
                 ValueMap map = childres.getValueMap();
-                Entity bk = new Entity();
-                bk.setBookName(map.get("bookName", String.class));
-                bk.setBookAuthor(map.get("bookAuthor", String.class));
-                bk.setBookPrice(map.get("bookPrice", String.class));
+                Entity bk = new Entity(map.get("bookAuthor", String.class),
+                        map.get("bookName", String.class),
+                        map.get("bookPrice", String.class),"");
                 list.add(bk);
             }
         }

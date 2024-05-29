@@ -4,6 +4,14 @@ package com.aem.assignment.core.entities;
 public class OrphanAsset {
 
     private String name;
+    private String path;
+    public OrphanAsset(String name,String path)
+    {
+        this.name=name;
+        this.path=path;
+
+    }
+
 
     public String getName() {
         return name;
@@ -21,6 +29,6 @@ public class OrphanAsset {
         this.path = path;
     }
 
-    private String path;
+
 
 }

@@ -1,10 +1,10 @@
-package com.aem.assignment.core.models.impl;
+package com.aem.assignment.core.entities;
 
 
 public class Rating
 {
-    Integer rate;
-    Integer count;
+   private  Integer rate;
+   private  Integer count;
 
     public Integer getRate() {
         return rate;

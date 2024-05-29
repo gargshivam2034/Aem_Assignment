@@ -1,6 +1,6 @@
 package com.aem.assignment.core.services;
 
-import com.aem.assignment.core.models.impl.Entity;
+import com.aem.assignment.core.entities.Entity;
 
 import java.util.List;
 

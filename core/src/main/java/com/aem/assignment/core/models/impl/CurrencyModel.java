@@ -1,4 +1,4 @@
-package com.aem.assignment.core.models;
+package com.aem.assignment.core.models.impl;
 
 import com.aem.assignment.core.caconfig.CurrencyConfig;
 import org.apache.sling.api.resource.Resource;

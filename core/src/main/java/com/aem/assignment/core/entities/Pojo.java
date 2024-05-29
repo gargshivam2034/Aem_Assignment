@@ -1,12 +1,12 @@
-package com.aem.assignment.core.models.impl;
+package com.aem.assignment.core.entities;
 
 public class Pojo
 {
-    Integer id;
-    String title;
-    String image;
-    Integer price;
-    String description;
+    private Integer id;
+    private String title;
+    private String image;
+    private  Integer price;
+    private String description;
     public Integer getId() {
         return id;
     }
