@@ -18,4 +18,5 @@ public @interface PageConfig {
             description = "Cron expression used by the scheduler",
             type = AttributeType.STRING)
     public String scheduler_expression() default "";
+
 }

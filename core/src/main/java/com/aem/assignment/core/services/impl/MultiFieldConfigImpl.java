@@ -35,6 +35,8 @@ public class MultiFieldConfigImpl implements MultiFieldConfigService {
 //            authmap.put(ResourceResolverFactory.SUBS   ERVICE,"shivam");
 //            authmap.put(ResourceResolverFactory.PASSWORD,"admin");
             //ResourceResolver resourceResolver=resourceResolverFactory.getResourceResolver(authmap);
+
+
             Resource books = resourceResolver.getResource("/content/aem_assignment/us/en/jcr:content/root/container/container/multifield_741242136/books");
             if (books != null && books.hasChildren()) {
                 Stream<Resource> resourceStream = StreamSupport.stream(books.getChildren().spliterator(), false);

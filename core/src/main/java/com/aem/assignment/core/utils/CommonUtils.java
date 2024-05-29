@@ -27,18 +27,6 @@ import java.util.*;
 import static org.apache.oltu.oauth2.common.message.types.TokenType.BEARER;
 
 public final class CommonUtils {
-
-    /**
-     * Performs an HTTP request based on the specified method, URL, request object, and token.
-     *
-     * @param method       The HTTP method (GET or POST).
-     * @param apiUrl       The URL to send the request to.
-     * @param requestObject The object to include in the request body (for POST requests).
-     * @param token        The authentication token (optional).
-     * @param <T>          The type of the request object.
-     * @return A ClientResponse object containing the response from the HTTP request.
-     * @throws Exception If an error occurs during the HTTP request.
-     */
     public static <T> ClientResponse getClientResponse(final String method,
                                                        final String apiUrl,
                                                        final T requestObject,
@@ -76,13 +64,7 @@ public final class CommonUtils {
         return clientResponse;
     }
 
-    /**
-     * Executes an HTTP request and returns the response as a ClientResponse object.
-     *
-     * @param request The HTTP request to execute.
-     * @return A ClientResponse object containing the response from the HTTP request.
-     * @throws Exception If an error occurs during the HTTP request.
-     */
+
     public static ClientResponse executeRequest(final HttpUriRequest request) throws Exception {
         String result = StringUtils.EMPTY;
         try (CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -114,11 +96,9 @@ public final class CommonUtils {
      *
      * @param productEntityList The list of ProductEntity objects to sort.
      * @param sortOrder         The sort order ('asc' for ascending, 'dsc' for descending).
-     * @return The sorted list of ProductEntity objects.
      * @throws IllegalArgumentException If an invalid sort order is provided.
      */
-    // Sort the product list based on the price
-    public static List<ProductEntity> sortProductEntitiesByPrice(List<ProductEntity> productEntityList, String sortOrder) {
+    public static void sortProductEntitiesByPrice(List<ProductEntity> productEntityList, String sortOrder) {
         Collections.sort(productEntityList, new Comparator<ProductEntity>() {
             @Override
             public int compare(ProductEntity product1, ProductEntity product2) {
@@ -136,17 +116,9 @@ public final class CommonUtils {
             }
         });
 
-        return productEntityList;
     }
 
-    //----------- Get params From URL -----------
 
-    /**
-     * Extracts parameters from the URL of a Sling HTTP servlet request.
-     *
-     * @param request The SlingHttpServletRequest from which to extract parameters.
-     * @return A list of parameters extracted from the URL.
-     */
     public static List<String> getParamsFromURL(final SlingHttpServletRequest request){
         RequestPathInfo requestPathInfo = request.getRequestPathInfo();
         String suffix = requestPathInfo.getSuffix();
@@ -154,7 +126,7 @@ public final class CommonUtils {
             String[] paramsArray = suffix.split("/");
             List<String> paramsList = Arrays.asList(paramsArray);
             List<String> params = new ArrayList<>(paramsList);
-            params.remove(0); //removing first index because there is a whitespace at 1st index
+            params.remove(0);
 
             return params;
         }

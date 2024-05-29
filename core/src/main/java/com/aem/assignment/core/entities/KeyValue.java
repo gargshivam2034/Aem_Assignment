@@ -3,6 +3,8 @@ package com.aem.assignment.core.entities;
 
 
 public class KeyValue {
+    private String key;
+    private String value;
     public String getKey() {
         return key;
     }
@@ -24,6 +26,6 @@ public class KeyValue {
         this.value = value;
     }
 
-    private String key;
-    private String value;
+
+
 }

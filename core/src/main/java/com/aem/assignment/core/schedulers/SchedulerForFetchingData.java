@@ -1,4 +1,5 @@
 package com.aem.assignment.core.schedulers;
+
 import com.aem.assignment.core.services.ReplicatingAgentService;
 import org.apache.sling.api.resource.LoginException;
 import org.apache.sling.api.resource.ResourceResolver;
@@ -14,50 +15,79 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component(service = Runnable.class,immediate = true)
-@Designate(ocd= SchedulerForFetchingData.Config.class)
+/**
+ * A scheduled task for fetching data from a third-party API and creating pages in AEM.
+ */
+@Component(service = Runnable.class, immediate = true)
+@Designate(ocd = SchedulerForFetchingData.Config.class)
 public class SchedulerForFetchingData implements Runnable {
-    @ObjectClassDefinition(name="A scheduled task for fetching data",
-            description = "Simple demo for cron-job like task with properties")
+
+    /**
+     * OSGi configuration interface for the scheduler.
+     */
+    @ObjectClassDefinition(
+            name = "A scheduled task for fetching data",
+            description = "Simple demo for cron-job like task with properties"
+    )
     public static @interface Config {
 
+        /**
+         * Cron-job expression for scheduling.
+         *
+         * @return the cron expression as a string
+         */
         @AttributeDefinition(name = "Cron-job expression")
         String scheduler_expression() default "*/5 * * * *";
 
-        @AttributeDefinition(name = "Concurrent task",
-                description = "Whether or not to schedule this task concurrently")
+        /**
+         * Indicates if the task should run concurrently.
+         *
+         * @return true if concurrent, false otherwise
+         */
+        @AttributeDefinition(
+                name = "Concurrent task",
+                description = "Whether or not to schedule this task concurrently"
+        )
         boolean scheduler_concurrent() default false;
 
-        @AttributeDefinition(name = "A parameter",
-                description = "Can be configured in /system/console/configMgr")
+        /**
+         * A configurable parameter.
+         *
+         * @return the parameter as a string
+         */
+        @AttributeDefinition(
+                name = "A parameter",
+                description = "Can be configured in /system/console/configMgr"
+        )
         String myParameter() default "";
     }
+
     @Reference
     private ReplicatingAgentService replicatingAgentService;
 
     @Reference
     private ResourceResolverFactory resourceResolverFactory;
 
+    /**
+     * Fetches data from the API and creates a page in AEM based on the data.
+     */
     @Override
     public void run() {
-       String string=replicatingAgentService.ApiFetchData();
+        String responseData = replicatingAgentService.ApiFetchData();
 
         try {
-            Map<String,Object> authMap=new HashMap<>();
-            authMap.put(ResourceResolverFactory.SUBSERVICE,"customuser");
-            ResourceResolver resourceResolver=resourceResolverFactory.getResourceResolver(authMap);
-            JSONObject jsonObject=new JSONObject(string);
-            jsonObject.get("id");
+            Map<String, Object> authMap = new HashMap<>();
+            authMap.put(ResourceResolverFactory.SUBSERVICE, "customuser");
+            ResourceResolver resourceResolver = resourceResolverFactory.getResourceResolver(authMap);
+
+            JSONObject jsonObject = new JSONObject(responseData);
+            jsonObject.get("id");  // Process the JSON data as needed
+
             replicatingAgentService.CreatePage(resourceResolver);
-
-        }
-        catch (JSONException e) {
-            throw new RuntimeException(e);
+        } catch (JSONException e) {
+            throw new RuntimeException("Error parsing JSON data from API", e);
         } catch (LoginException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error obtaining resource resolver", e);
         }
-
     }
-
-
 }

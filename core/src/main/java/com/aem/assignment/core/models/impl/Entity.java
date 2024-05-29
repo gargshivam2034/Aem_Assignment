@@ -2,10 +2,10 @@ package com.aem.assignment.core.models.impl;
 
 public class Entity {
 
-    String BookAuthor;
-    String BookName;
-    String BookPrice;
-    String BookPath;
+   private String BookAuthor;
+   private String BookName;
+   private  String BookPrice;
+    private String BookPath;
 
     public void setBookAuthor(String bookAuthor) {
         BookAuthor = bookAuthor;

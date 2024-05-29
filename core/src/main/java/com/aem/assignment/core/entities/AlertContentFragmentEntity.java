@@ -2,7 +2,9 @@ package com.aem.assignment.core.entities;
 
 public class AlertContentFragmentEntity {
 
-    String name;
+    private String name;
+    private String alert;
+    private String message;
 
     public String getName() {
         return name;
@@ -28,6 +30,5 @@ public class AlertContentFragmentEntity {
         this.message = message;
     }
 
-    String alert;
-    String message;
+
 }

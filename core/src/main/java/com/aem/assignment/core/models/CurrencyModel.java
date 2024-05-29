@@ -19,7 +19,7 @@ public class CurrencyModel {
 
     @PostConstruct
     protected void init() {
-        // Use the ConfigurationBuilder to get the CurrencyConfig for the current resource
+        
         CurrencyConfig config = resource.adaptTo(ConfigurationBuilder.class).as(CurrencyConfig.class);
 
         if (config != null) {

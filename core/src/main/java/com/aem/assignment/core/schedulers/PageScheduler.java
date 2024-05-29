@@ -1,85 +1,98 @@
 package com.aem.assignment.core.schedulers;
 
 import com.aem.assignment.core.configs.PageConfig;
-import com.aem.assignment.core.entities.ProductEntity;
 import com.aem.assignment.core.services.PageService;
 import com.aem.assignment.core.services.ProductDetailService;
 import org.apache.sling.commons.scheduler.ScheduleOptions;
 import org.apache.sling.commons.scheduler.Scheduler;
-import org.apache.sling.event.jobs.Job;
-import org.apache.sling.event.jobs.JobBuilder;
 import org.apache.sling.event.jobs.JobManager;
-import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.osgi.service.component.annotations.*;
 import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.jcr.RepositoryException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Predicate;
 
-@Component(service = {Runnable.class},immediate = true, configurationPolicy = ConfigurationPolicy.REQUIRE)
+/**
+ * Scheduler component for pulling product details and creating pages in AEM.
+ */
+@Component(service = {Runnable.class}, immediate = true, configurationPolicy = ConfigurationPolicy.REQUIRE)
 @Designate(ocd = PageConfig.class)
-public class PageScheduler implements Runnable{
+public class PageScheduler implements Runnable {
     private static final Logger log = LoggerFactory.getLogger(PageScheduler.class);
+
+    @Reference
+    private ProductDetailService productDetailService;
+
+    @Reference
+    private JobManager jobManager;
+
+    @Reference
+    private PageService pageService;
+
+    @Reference
+    private Scheduler scheduler;
+
     private int schedulerId;
-
-    @Reference
-    ProductDetailService productDetailService;
-
-    @Reference
-    JobManager jobManager;
-
-    @Reference
-    PageService pageService;
-
     private static final String BASE_URL = "https://fakestoreapi.com/products/";
+    private static final String PRODUCT_ID = "1";
+    private static final String JOB_TOPIC = "training/pageJob";
 
-    private static String PRODUCT_ID = "1";
-
-    public static String JOB_TOPIC = "training/pageJob";
-
-
-    @Reference
-    Scheduler scheduler;
-
+    /**
+     * Activate the scheduler with the provided configuration.
+     *
+     * @param config the PageConfig instance containing scheduler configuration
+     */
     @Activate
-    protected void active(PageConfig config){
+    protected void activate(PageConfig config) {
         schedulerId = config.schedulerName().hashCode();
         addScheduler(config);
     }
 
+    /**
+     * Deactivate the scheduler.
+     */
     @Deactivate
-    protected void deactivate(){
+    protected void deactivate() {
         removeScheduler();
-
     }
 
-    public void addScheduler(PageConfig config){
+    /**
+     * Add and schedule the job with the given configuration.
+     *
+     * @param config the PageConfig instance containing scheduler configuration
+     */
+    public void addScheduler(PageConfig config) {
         ScheduleOptions scheduleOptions = scheduler.EXPR(config.scheduler_expression());
-        scheduleOptions .name(String.valueOf(schedulerId));
-        //scheduleOptions.canRunConcurrently(false);
-        scheduler.schedule(this,scheduleOptions);
-
+        scheduleOptions.name(String.valueOf(schedulerId));
+        scheduler.schedule(this, scheduleOptions);
     }
 
+    /**
+     * Remove the scheduler.
+     */
     protected void removeScheduler() {
         scheduler.unschedule(String.valueOf(schedulerId));
     }
 
-    public void startJob(){
-        Map<String,Object> propertyMap = new HashMap<>();
-        propertyMap.put("name","PageScheduler");
-        propertyMap.put("schedulerId",schedulerId);
-        jobManager.addJob(JOB_TOPIC,propertyMap);
+    /**
+     * Start the job to create pages based on the product details.
+     */
+    public void startJob() {
+        Map<String, Object> propertyMap = new HashMap<>();
+        propertyMap.put("name", "PageScheduler");
+        propertyMap.put("schedulerId", schedulerId);
+        jobManager.addJob(JOB_TOPIC, propertyMap);
     }
 
+    /**
+     * Run method executed by the scheduler.
+     */
     @Override
     public void run() {
-        log.info("Starting the sling job......");
+        log.info("Starting the sling job...");
         startJob();
-        log.debug("sling job has ended: ");
+        log.debug("Sling job has ended.");
     }
 }

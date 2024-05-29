@@ -1,11 +1,11 @@
 package com.aem.assignment.core.servlets;
+
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.servlets.ServletResolverConstants;
-import org.apache.sling.api.servlets.SlingAllMethodsServlet;
 import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,11 +14,14 @@ import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.jcr.Node;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import java.io.IOException;
 import java.util.Iterator;
+
+/**
+ * Servlet for retrieving child pages under a specific path and returning them as JSON.
+ */
 @Component(
         service = Servlet.class,
         property = {
@@ -27,19 +30,50 @@ import java.util.Iterator;
         }
 )
 public class DemoServletPathType extends SlingSafeMethodsServlet {
+
     private static final Logger logger = LoggerFactory.getLogger(DemoServletPathType.class);
+
+    /**
+     * Handles HTTP GET requests to retrieve child pages and return them as JSON.
+     *
+     * @param request  The Sling HTTP servlet request object.
+     * @param response The Sling HTTP servlet response object.
+     * @throws ServletException If an error occurs during servlet processing.
+     * @throws IOException      If an I/O error occurs.
+     */
     @Override
-    protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse slingHttpServletResponse)
+    protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response)
             throws ServletException, IOException {
         ResourceResolver resourceResolver = request.getResourceResolver();
         PageManager pageManager = resourceResolver.adaptTo(PageManager.class);
-        if (pageManager == null) {
-            return;
+        if (pageManager != null) {
+            Page page = getPage(pageManager);
+            if (page != null) {
+                JSONArray pageArray = retrieveChildPages(page);
+                writeResponse(response, pageArray);
+            }
         }
-        Page page = pageManager.getPage("/content/aem_assignment/us");
+    }
+
+    /**
+     * Retrieves the page at the specified path.
+     *
+     * @param pageManager The PageManager instance.
+     * @return The Page object or null if not found.
+     */
+    private Page getPage(PageManager pageManager) {
+        return pageManager.getPage("/content/aem_assignment/us");
+    }
+
+    /**
+     * Retrieves child pages of the given page and constructs a JSONArray containing their titles.
+     *
+     * @param page The parent page.
+     * @return JSONArray containing child page titles.
+     */
+    private JSONArray retrieveChildPages(Page page) {
         JSONArray pageArray = new JSONArray();
         try {
-            pageManager.create("","","","");
             Iterator<Page> iterator = page.listChildren();
             while (iterator.hasNext()) {
                 Page childPage = iterator.next();
@@ -47,13 +81,21 @@ public class DemoServletPathType extends SlingSafeMethodsServlet {
                 pageObject.put("title", childPage.getTitle());
                 pageArray.put(pageObject);
             }
-
-
-        } catch (Exception e) {
-            logger.error("Error occurred while retrieving pages: {}", e.getMessage());
+        } catch (JSONException e) {
+            logger.error("Error occurred while constructing JSON response: {}", e.getMessage());
         }
-        slingHttpServletResponse.setContentType("application/json");
-        slingHttpServletResponse.getWriter().write(pageArray.toString());
+        return pageArray;
     }
 
+    /**
+     * Writes the JSON response to the servlet response.
+     *
+     * @param response  The Sling HTTP servlet response object.
+     * @param pageArray The JSONArray to be written as the response.
+     * @throws IOException If an I/O error occurs.
+     */
+    private void writeResponse(SlingHttpServletResponse response, JSONArray pageArray) throws IOException {
+        response.setContentType("application/json");
+        response.getWriter().write(pageArray.toString());
+    }
 }

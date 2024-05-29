@@ -2,7 +2,9 @@ package com.aem.assignment.core.entities;
 
 public class MobileEntity {
 
-    String name;
+    private String name;
+    private String brand;
+    private double price;
 
     public String getName() {
         return name;
@@ -28,7 +30,6 @@ public class MobileEntity {
         this.price = price;
     }
 
-    String brand;
-    double price;
+
 
 }

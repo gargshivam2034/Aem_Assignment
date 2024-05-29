@@ -66,8 +66,6 @@ public class ProductEntity {
     private String image;
     private Rating rating;
 
-    // Getter and Setter methods
-
     public static class Rating {
         private double rate;
         private int count;
@@ -87,6 +85,6 @@ public class ProductEntity {
         public void setCount(int count) {
             this.count = count;
         }
-// Getter and Setter methods
+
     }
 }

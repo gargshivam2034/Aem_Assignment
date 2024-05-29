@@ -1,23 +1,28 @@
 package com.aem.assignment.core.entities;
 
 
+import com.aem.assignment.core.models.FaqComponentModel;
+import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.models.annotations.DefaultInjectionStrategy;
+import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+
+
+@Model(adaptables = Resource.class,
+        defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
 public class FaqEntity {
-    String question;
-    String answer;
+    @ValueMapValue
+    private String faqQuestion;
+    @ValueMapValue
+    private String faqAnswer;
 
-    public String getQuestion() {
-        return question;
+    public String getFaqQuestion() {
+        return faqQuestion;
     }
 
-    public void setQuestion(String question) {
-        this.question = question;
+    public String getFaqAnswer() {
+        return faqAnswer;
     }
 
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
 }

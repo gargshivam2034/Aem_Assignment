@@ -13,6 +13,9 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Servlet responsible for handling product search requests.
+ */
 @Component(
         service = { Servlet.class },
         property = {
@@ -25,6 +28,14 @@ public class ProductSearchServlet extends SlingAllMethodsServlet {
     @Reference
     private transient ProductSearchService productSearchService;
 
+    /**
+     * Handles HTTP GET requests for product search.
+     *
+     * @param request  The Sling HTTP servlet request object.
+     * @param response The Sling HTTP servlet response object.
+     * @throws ServletException If an error occurs during servlet processing.
+     * @throws IOException      If an I/O error occurs.
+     */
     @Override
     protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
         String query = request.getParameter("query");

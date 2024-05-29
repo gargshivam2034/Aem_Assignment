@@ -1,6 +1,6 @@
 package com.aem.assignment.core.models.impl;
 
-import com.aem.assignment.core.models.ImageOrVideoComponentModel;
+import com.aem.assignment.core.models.BannerComponentModel;
 import org.apache.commons.lang.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.models.annotations.Default;
@@ -8,13 +8,11 @@ import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
-import java.util.ArrayList;
-
 
 @Model(adaptables = {SlingHttpServletRequest.class},
-        adapters = {ImageOrVideoComponentModel.class},
+        adapters = {BannerComponentModel.class},
         defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
-public class ImageOrVideoComponentModelImpl implements ImageOrVideoComponentModel {
+public class BannerComponentModelImpl implements BannerComponentModel {
 
     public String getContentType() {
         return contentType;
